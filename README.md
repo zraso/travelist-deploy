@@ -1,4 +1,5 @@
-# Travelist
+Travelist &nbsp; [![Build Status](https://travis-ci.org/melvinlau/travelist.svg?branch=master)](https://travis-ci.org/melvinlau/travelist) [![Test Coverage](https://api.codeclimate.com/v1/badges/eec418e2ffd21ee8ead8/test_coverage)](https://codeclimate.com/github/melvinlau/travelist/test_coverage) [![Maintainability](https://api.codeclimate.com/v1/badges/eec418e2ffd21ee8ead8/maintainability)](https://codeclimate.com/github/melvinlau/travelist/maintainability)
+=====
 
 ## User stories
 
