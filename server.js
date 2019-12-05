@@ -45,7 +45,7 @@ app.use((error, req, res, next) => {
 mongoose
   .connect(process.env.MONGODB_DEV, { useNewUrlParser: true }, () => console.log('connected to database'))
   .then(() => {
-    app.listen(process.env.port, () => console.log(`LISTENING ON PORT ${process.env.API_PORT}`));
+    app.listen(port, () => console.log(`LISTENING ON PORT ${port}`));
   })
   .catch((err) => {
     console.log(err);
