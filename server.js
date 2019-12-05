@@ -25,10 +25,10 @@ app.use(bodyParser.json());
 app.use(logger('dev'));
 
 
-app.use(express.static(path.join(__dirname, 'client/src')));
+app.use(express.static(path.join(__dirname, 'client/build')));
 app.get('/', function (req, res) {
   console.log('inside get')
-  res.sendFile(path.join(__dirname, 'client/src', 'index.js'));
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
 
