@@ -24,6 +24,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger('dev'));
 
+
+app.use(express.static(path.join(__dirname, 'client/public')));
+app.get('/', function (req, res) {
+  console.log('inside get')
+  res.sendFile(path.join(__dirname, 'client/public', 'index.html'));
+});
+
+
 app.use('/api/trips', tripsRoutes);
 app.use('/api/items', itemsRoutes);
 app.use('/api/users', usersRoutes);
@@ -50,10 +58,3 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
-
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'client/public')));
-  app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'client/public', 'index.html'));
-  });
-}
