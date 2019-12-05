@@ -36,7 +36,7 @@ function StartForm({ trip, updateTrip }) {
   const handleCreateTrip = () => {
     axios
       .post(
-        "http://localhost:3001/api/trips/",
+        "https://travelistmakers.herokuapp.com/api/trips/",
         {
           destination: destination,
           dateFrom: dateFrom,

@@ -21,11 +21,11 @@ function Trips() {
 
   const handleGetTrips = async () => {
     let tripsArray = await axios.get(
-        `http://localhost:3001/api/users/${auth.userId}/trips`,
-        {
-          headers: { Authorization: "bearer " + auth.token }
-        }
-      )
+      `https://travelistmakers.herokuapp.com/api/users/${auth.userId}/trips`,
+      {
+        headers: { Authorization: "bearer " + auth.token }
+      }
+    )
       .then(response => {
         return response.data.trips;
       })
@@ -33,7 +33,7 @@ function Trips() {
     return tripsArray;
   };
 
-  useEffect( () => {
+  useEffect(() => {
     handleGetTrips().then(data => setUserTrips(data));
   }, []);
 
@@ -46,7 +46,7 @@ function Trips() {
       <div>
         {
           userTrips.map(trip => {
-              return (< TripCard key={trip._id} trip={trip} />)
+            return (< TripCard key={trip._id} trip={trip} />)
           })
         }
       </div>

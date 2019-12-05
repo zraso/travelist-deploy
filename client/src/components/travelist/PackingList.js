@@ -158,7 +158,7 @@ function PackingList() {
   const handleSaveList = e => {
     axios
       .patch(
-        `http://localhost:3001/api/trips/${trip._id}/items/packed`,
+        `https://travelistmakers.herokuapp.com/api/trips/${trip._id}/items/packed`,
         {
           items: items,
           packedItems: completedItems

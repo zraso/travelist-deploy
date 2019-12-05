@@ -48,7 +48,7 @@ function ActivityList() {
     const imageUrl = await axios.get(
       url,
       { headers: { 'Authorization': `${apiKey}` } }
-      )
+    )
       .then(response => {
         const photoResults = response.data.photos;
         if (photoResults.length > 0) return photoResults[0].src.medium;
@@ -58,29 +58,29 @@ function ActivityList() {
 
   const handleCreateList = e => {
     getImage(trip.destination)
-    .then(imageUrl => {
-      axios
-        .patch(
-          `http://localhost:3001/api/trips/${trip._id}`,
-          {
-            destination: trip.destination,
-            activities: selectedActivities,
-            imageUrl: imageUrl
-          },
-          {
-            headers: { Authorization: "bearer " + auth.token }
-          }
-        )
-        .then(response => {
-          callUpdateTrip(response.data.trip);
-          console.log(
-            "update trip with activities: response",
-            response.data.trip
-          );
-          history.push('/packinglist');
-        })
-        .catch(console.log);
-    });
+      .then(imageUrl => {
+        axios
+          .patch(
+            `https://travelistmakers.herokuapp.com/api/trips/${trip._id}`,
+            {
+              destination: trip.destination,
+              activities: selectedActivities,
+              imageUrl: imageUrl
+            },
+            {
+              headers: { Authorization: "bearer " + auth.token }
+            }
+          )
+          .then(response => {
+            callUpdateTrip(response.data.trip);
+            console.log(
+              "update trip with activities: response",
+              response.data.trip
+            );
+            history.push('/packinglist');
+          })
+          .catch(console.log);
+      });
   };
 
   const renderHeader = () => {

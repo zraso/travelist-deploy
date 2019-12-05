@@ -79,7 +79,7 @@ function Auth() {
     if (isLoginMode) {
       try {
         const token = auth.token;
-        const response = await fetch("http://localhost:3001/api/users/login", {
+        const response = await fetch("https://travelistmakers.herokuapp.com/api/users/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -104,7 +104,7 @@ function Auth() {
       }
     } else {
       try {
-        const response = await fetch("http://localhost:3001/api/users/signup", {
+        const response = await fetch("https://travelistmakers.herokuapp.com/api/users/signup", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
