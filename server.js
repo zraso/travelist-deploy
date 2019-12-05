@@ -5,6 +5,8 @@ const dotenv = require('dotenv');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const path = require('path');
+const port = process.env.PORT || 3001;
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const tripsRoutes = require('./src/routes/tripsRoutes');
@@ -41,10 +43,17 @@ app.use((error, req, res, next) => {
 
 // connect to DB and start the server
 mongoose
-  .connect(process.env.MONGODB_DEV, { useNewUrlParser: true }, () => console.log('connected to database'),)
+  .connect(process.env.MONGODB_DEV, { useNewUrlParser: true }, () => console.log('connected to database'))
   .then(() => {
-    app.listen(process.env.API_PORT, () => console.log(`LISTENING ON PORT ${process.env.API_PORT}`),);
+    app.listen(process.env.API_PORT, () => console.log(`LISTENING ON PORT ${process.env.API_PORT}`));
   })
   .catch((err) => {
     console.log(err);
   });
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'client/build')));
+  app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  });
+}

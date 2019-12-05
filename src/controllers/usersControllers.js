@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const HttpError = require('../models/http-error');
 const User = require('../models/user');
-const tripsController = require('../controllers/trips');
+const tripsController = require('./trips');
 
 const signup = async (req, res, next) => {
   // eslint-disable-next-line object-curly-newline

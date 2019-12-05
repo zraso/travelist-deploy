@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const HttpError = require('../models/http-error');
 const Trip = require('../models/trip');
-const itemsController = require('../controllers/items');
+const itemsController = require('./items');
 const Weather = require('../services/weather-services');
 const User = require('../models/user');
 
