@@ -199,14 +199,6 @@ function PackingList() {
       <TripHeader trip={trip} formatDate={formatDate} />
       <div id="trip-status"></div>
 
-//       <TripHeader key={trip._id}
-//         destination={trip.destination}
-//         dateFrom={trip.dateFrom}
-//         dateTo={trip.dateTo}
-//         id={trip._id}
-//         weather={trip.weather}
-//         link={trip.image} />
-
       <div id="travelist"></div>
       {renderButton()}
     </div>
