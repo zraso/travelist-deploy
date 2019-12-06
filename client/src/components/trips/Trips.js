@@ -8,14 +8,13 @@ import {
 } from "react-router-dom";
 import { AuthContext } from "../shared/context/auth-context";
 import axios from 'axios';
+import TripsListHeader from './TripsListHeader';
 import TripCard from "./TripCard";
 
 function Trips() {
-
   const auth = useContext(AuthContext);
   const trip = auth.trip;
   const updateTrip = auth.updateTrip;
-  console.log('trip loaded into tripcard', auth.trip);
 
   const [userTrips, setUserTrips] = useState([]);
 
@@ -39,13 +38,10 @@ function Trips() {
 
   return (
     <div>
-      <Link to="/">
-        <button className="btn btn-primary btn-lg float-right">NEW TRIP</button>
-      </Link>
-      <h2 className="mb-4"><strong>{auth.name}</strong>'s trips</h2>
+      <TripsListHeader />
       <div>
         {
-          userTrips.map(trip => {
+          userTrips.reverse().map(trip => {
             return (< TripCard key={trip._id} trip={trip} />)
           })
         }

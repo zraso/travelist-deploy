@@ -20,10 +20,12 @@ import Trips from "./components/trips/Trips";
 import Auth from "./components/user/Auth";
 import Navbar from "./components/shared/components/Navbar";
 import Footer from "./components/shared/components/Footer";
+
+import ScrollToTop from './components/shared/components/ScrollToTop';
+
 import { AuthContext } from "./components/shared/context/auth-context";
 
 function App() {
-
   const [userId, setUserId] = useState(false);
   const [name, setName] = useState(false);
   const [token, setToken] = useState(false);
@@ -40,6 +42,7 @@ function App() {
         userId: userId,
         name: name,
         token: token
+        // trip: trip
       })
     );
   }, []);
@@ -56,7 +59,12 @@ function App() {
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem("userData"));
     if (storedData && storedData.token) {
-      login(storedData.userId, storedData.name, storedData.token);
+      login(
+        storedData.userId,
+        storedData.name,
+        storedData.token
+        // storedData.trip
+      );
     }
   }, [login]);
 
@@ -87,18 +95,17 @@ function App() {
       }}
     >
       <Router>
+        <ScrollToTop />
         <Navbar />
         <div className="container-fluid" id="content-wrap">
           <div className="row justify-content-center">
-            <div className="col-12 col-sm-6">
+            <div className="col-12 col-sm-4">
               <Switch>
                 <Route exact path="/" component={Start} />
                 <Route exact path="/start" component={Start} />
                 <Route exact path="/activities" component={ActivityList} />
                 <Route exact path="/packinglist" component={PackingList} />
                 <Route exact path="/auth" component={Auth} />
-
-
                 {routes}
               </Switch>
             </div>

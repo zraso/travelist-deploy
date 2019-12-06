@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
 import { AuthContext } from "../shared/context/auth-context";
+import MessageHeader from "../shared/components/MessageHeader";
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -18,9 +20,11 @@ function ActivityList() {
   let history = useHistory();
 
   const [activities, setActivities] = useState([
-    "skiing",
+    "business",
+    "leisure",
+    "beach",
     "hiking",
-    "business"
+    "skiing"
   ]);
   const [selectedActivities, setSelectedActivities] = useState([]);
 
@@ -40,53 +44,48 @@ function ActivityList() {
     setSelectedActivities(newSelectedActivities);
   };
 
-  const getImage = async (destination) => {
-    const formattedDestination = destination.split(' ').join('+');
+  const getImage = async destination => {
+    const formattedDestination = destination.split(" ").join("+");
     const apiKey = process.env.REACT_APP_IMAGE_API_KEY;
     const url = `https://api.pexels.com/v1/search?query=${formattedDestination}&per_page=1&page=1`;
 
-    const imageUrl = await axios.get(
-      url,
-      { headers: { 'Authorization': `${apiKey}` } }
-    )
+    const imageUrl = await axios
+      .get(url, { headers: { Authorization: `${apiKey}` } })
       .then(response => {
         const photoResults = response.data.photos;
-        if (photoResults.length > 0) return photoResults[0].src.medium;
-      })
-    return imageUrl;
-  }
-
-  const handleCreateList = e => {
-    getImage(trip.destination)
-      .then(imageUrl => {
-        axios
-          .patch(
-            `https://travelistmakers.herokuapp.com/api/trips/${trip._id}`,
-            {
-              destination: trip.destination,
-              activities: selectedActivities,
-              imageUrl: imageUrl
-            },
-            {
-              headers: { Authorization: "bearer " + auth.token }
-            }
-          )
-          .then(response => {
-            callUpdateTrip(response.data.trip);
-            console.log(
-              "update trip with activities: response",
-              response.data.trip
-            );
-            history.push('/packinglist');
-          })
-          .catch(console.log);
+        if (photoResults.length > 0) {
+          return photoResults[0].src.large;
+        } else {
+          return "https://images.pexels.com/photos/171053/pexels-photo-171053.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260";
+        }
       });
+    return imageUrl;
   };
 
-  const renderHeader = () => {
-    if (trip.destination) {
-      return <h3>Things I'll be doing in {trip.destination}</h3>;
-    }
+  const handleCreateList = e => {
+    getImage(trip.destination).then(imageUrl => {
+      axios
+        .patch(
+          `https://travelistmakers.herokuapp.com/api/trips/${trip._id}`,
+          {
+            destination: trip.destination,
+            activities: selectedActivities,
+            imageUrl: imageUrl
+          },
+          {
+            headers: { Authorization: "bearer " + auth.token }
+          }
+        )
+        .then(response => {
+          callUpdateTrip(response.data.trip);
+          console.log(
+            "update trip with activities: response",
+            response.data.trip
+          );
+          history.push("/packinglist");
+        })
+        .catch(console.log);
+    });
   };
 
   const renderActivitiesList = () => {
@@ -111,14 +110,27 @@ function ActivityList() {
 
   return (
     <div>
-      {renderHeader()}
-
-      <div id="activities-list"></div>
-
-      <button data-cy="generate-list-button" onClick={handleCreateList}>
-        Generate a Travelist!
-      </button>
-
+      <MessageHeader
+        message="Up to anything fun there?"
+        destination={trip.destination}
+        image="./images/casie2.png"
+      />
+      <div className="card mt-2">
+        <div className="card-body">
+          <div className="row mb-3">
+            <div className="col-12">
+              <div id="activities-list"></div>
+              <button
+                data-cy="generate-list-button"
+                onClick={handleCreateList}
+                className="btn btn-warning"
+              >
+                Generate a Travelist!
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
